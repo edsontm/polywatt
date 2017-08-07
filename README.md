@@ -28,7 +28,7 @@ cd polywatt
 
 After the first complete run of `polywatt`, the code creates a folder named `complete_years`. This folder represents the pairs of mesurements at the upstream and downstream level. 
 
-To create new test, simply add files in the this folder, respecting the file naming order, `<upstream station name>_<downstream station name>_<year>_<month>_<date>.csv`. The date in the file name represent the first day of the serie. Each line of this file represents a single day and each file can represent up to 365 days. Each line represent the upstream and downstream measurements separated by a comma. 
+To test a new pair of stations, simply add files in the this folder, respecting the file naming order, `<upstream station name>_<downstream station name>_<year>_<month>_<date>.csv`. The date in the file name represent the first day of the serie. Each line of this file represents a single day and each file can represent up to 365 days. Each line represent the upstream and downstream measurements separated by a comma. 
 
 ```
 284.000,402.000
