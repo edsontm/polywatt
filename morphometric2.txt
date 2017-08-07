@@ -1,0 +1,5 @@
+station      ,elevation km, distance_previous km
+caceres      ,0.11751   , 0
+descalvados  ,0.10511   , 129.717
+pconceicao   ,0.09683    , 123.255
+bvnorte      ,0.09651    , 138.995
