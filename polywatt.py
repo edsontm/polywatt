@@ -2,7 +2,7 @@
 
 import getopt
 import sys
-from pvddtw import TestClass
+from watt import TestClass
 import os
 import csv
 

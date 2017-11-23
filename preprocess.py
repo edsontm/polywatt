@@ -1,13 +1,24 @@
 #!/usr/bin/python
-import pvddtw
+from watt import Converter
 import sys
+import os
 
 if __name__ == '__main__':
     if (len(sys.argv) != 2):
         print("usage: %s <dir>\n"%(sys.argv[0]))
         exit(0)
-    else:
-        main_dir = sys.argv[1]
+    main_dir = sys.argv[1]
+    if not os.path.isdir(main_dir):
+        print("usage: %s <dir>\n"%(sys.argv[0]))
+        exit(0)
+    tformat = main_dir
+    conv = Converter()
+    
+    conv.convert()
+
+        
+
+        
 
     
 

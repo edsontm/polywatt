@@ -17,7 +17,6 @@ from matplotlib.backends.backend_pdf import PdfPages
 from matplotlib.colors import colorConverter
 
 from sklearn.neighbors import KNeighborsRegressor
-from sklearn.grid_search import GridSearchCV
 
 import getopt
 
@@ -39,9 +38,6 @@ class TestClass(object):
         r = RiverDataset()
         r.load_complete_years('complete_years')
         RiverPair.run_all_pairs(r)
-
-
-
 
 class RiverPairCache:
     def __init__(self):
