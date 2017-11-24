@@ -2,7 +2,7 @@ import os
 import csv
 import numpy as np
 from scipy.interpolate import interp1d
-from .dataloader import TablesLoader
+from .dataloader import TablesLoader,RcsvLoader
 import matplotlib.pyplot as plt
 
 
@@ -34,19 +34,11 @@ class Converter:
             self.save()
 
     def save(self):
-        if not os.path.isdir(self.output_dir):
-           os.mkdir(self.output_dir)
-
-        tbuffer = ""
-        for i in range(len(self.vdates)):
-            v = self.levels[i]
-            if type(v) == type(None):
-                v = -1
-            tbuffer+= self.vdates[i] + ",%f\n"%(v)
-            
-        f = open(self.output_dir+os.sep+self.river_name,'w')
-        f.write(tbuffer)
-        f.close()
+        rcsv = RcsvLoader()
+        rcsv.copy(self)
+        rcsv.save()
+        
+        
              
     def missing_dict(self,v):
         anterior = 0

@@ -53,6 +53,15 @@ class RcsvLoader:
         self.vdates = None 
         self.hdates = None
         self.levels = None
+        self.output_dir = None
+
+    def copy(self,obj):
+        self.output_dir = obj.output_dir
+        self.river_name = obj.river_name
+        self.vdates = obj.vdates
+        self.hdates = obj.hdates
+        self.levels = obj.levels
+
     def load(self,file_name):
         self.river_name = file_name.split(os.sep)[-1]
         f = csv.reader(open(file_name),delimiter=',')
@@ -67,6 +76,21 @@ class RcsvLoader:
             self.levels.append(float(value))
             self.hdates[date] = i
             i += 1
+    def save(self):
+        if not os.path.isdir(self.output_dir):
+           os.mkdir(self.output_dir)
+
+        tbuffer = ""
+        for i in range(len(self.vdates)):
+            v = self.levels[i]
+            if type(v) == type(None):
+                v = -1
+            tbuffer+= self.vdates[i] + ",%f\n"%(v)
+            
+        f = open(self.output_dir+os.sep+self.river_name,'w')
+        f.write(tbuffer)
+        f.close()
+
             
 
 
