@@ -6,6 +6,14 @@ from .dataloader import TablesLoader,RcsvLoader
 import matplotlib.pyplot as plt
 
 
+class RiverPairs:
+    def __init__(self):
+# CONTINUAR AQUI
+    
+     
+    
+        
+
 
  
 class Converter:
