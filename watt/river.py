@@ -320,7 +320,7 @@ class RiverPair:
     def pip(self):
         if self.run_all:
             ssize = len(self.lr1)
-            topn = int((ssize/364.0)*20)
+            topn = int((ssize/364.0)*50)
             self.topn1max = PairAnalysis.pipe(self.lr1,topn)
             self.topn2max = PairAnalysis.pipe(self.lr2,topn)
 
@@ -704,7 +704,7 @@ class RiverDataset:
 
 
 
-    def save_complete_years(self,complete_dir,start_date = '07-01'):
+    def save_complete_years(self,complete_dir,start_date = '01-01'):
         if self.pairs == None:
             raise Exception('sorry, you must execute load_pairs first')
         else:

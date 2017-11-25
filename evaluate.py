@@ -18,7 +18,7 @@ out_plot = 'igraphs2'
 if not os.path.isdir(out_plot):
     os.mkdir(out_plot)
 
-out_data = 'nolearning'
+out_data = 'results'
 if not os.path.isdir(out_data):
     os.mkdir(out_data)
 
@@ -62,9 +62,8 @@ for file_name in sorted(os.listdir(maindir)):
 
     original = np.matrix(original)
     x = range(original.shape[0])
-    nyears = len(x)/364
-    start = (nyears-1)*364
-    end = start + 364
+    start = len(x) - 365
+    end = len(x)
     print len(x), end
     if len(x) < end:
         print "Sorry, can't compute %s"%(file_name)
