@@ -29,6 +29,12 @@ cd polywatt
 
 ## testing other river levels
 
+The file `stations.txt` defines the river pairs <upstream file > <downstream file>. You have to update it with the files names
+
+The file `morphometric2.txt` represents the morphometric specification of elevation and distance between stations. You also have to update it.
+
+
+
 After the first complete run of `joinrivers.py`, the code creates a folder named `river_pairs`. This folder represents the pairs of mesurements at the upstream and downstream level. 
 
 To test a new pair of stations, simply add files in the this folder, respecting the file naming order, `<upstream station name>_<downstream station name>_<year>_<month>_<date>.csv`. The date in the file name represent the first day of the serie. Each line of this file represents a single day and each file can represent up to 365 days. Each line represent the upstream and downstream measurements separated by a comma. 
