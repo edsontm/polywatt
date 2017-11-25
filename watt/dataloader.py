@@ -3,8 +3,11 @@ import csv
 import numpy as np
 
 class TablesLoader:
-    def __init__(self):
-        self.cmonth = {'ago': 8, 'dez': 12, 'mar': 3, 'fev': 2, 'jun': 6, 'jul': 7, 'jan': 1, 'abr': 4, 'set': 9, 'mai': 5, 'nov': 11, 'out': 10}
+    def __init__(self,variant='portuguese'):
+        if variant == 'english':
+            self.cmonth = {'jan':1,'feb':2,'mar':3,'apr':4,'may':5,'jun':6,'jul':7,'aug':8,'sep':9,'oct':10,'nov':11,'dec':12}
+        elif variant == 'portuguese':
+            self.cmonth = {'ago': 8, 'dez': 12, 'mar': 3, 'fev': 2, 'jun': 6, 'jul': 7, 'jan': 1, 'abr': 4, 'set': 9, 'mai': 5, 'nov': 11, 'out': 10}
 
     def load(self,dataset_file):
         self.river_name = dataset_file.split(os.sep)[-1]
@@ -23,7 +26,7 @@ class TablesLoader:
                 v = date.split('-')
                 if len(v) == 2:
                     day = v[0]
-                    month = self.cmonth[v[1]]
+                    month = self.cmonth[v[1].lower()]
                     sdate = '%s-%02d-%02d'%(year,month,int(day))
                     self.vdates.append(sdate)
                     self.hdates[sdate] = i

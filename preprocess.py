@@ -11,8 +11,8 @@ if __name__ == '__main__':
     if not os.path.isdir(main_dir):
         print("usage: %s <dir>\n"%(sys.argv[0]))
         exit(0)
-    tformat = main_dir
-    conv = Converter()
+    tformat = main_dir.replace('/','')
+    conv = Converter(tformat)
     
     conv.convert()
 

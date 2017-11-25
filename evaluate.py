@@ -10,11 +10,6 @@ from sklearn.metrics import r2_score
 from sklearn.metrics import mean_absolute_error
 
 
-
-y = 20
-start = 20*364
-end   = start+364
-
 if len(sys.argv) < 2:
     maindir = 'prepared_data'
 else:
@@ -67,6 +62,10 @@ for file_name in sorted(os.listdir(maindir)):
 
     original = np.matrix(original)
     x = range(original.shape[0])
+    nyears = len(x)/364
+    start = (nyears-1)*364
+    end = start + 364
+    print len(x), end
     if len(x) < end:
         print "Sorry, can't compute %s"%(file_name)
         hdata[datakey][method].append((year,0,0))

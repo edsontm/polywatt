@@ -4,3 +4,9 @@ pconceicao.csv bvnorte.csv
 caceres.csv pconceicao.csv
 caceres.csv bvnorte.csv
 descalvados.csv bvnorte.csv
+wahpeton.csv fargo.csv
+fargo.csv forks.csv
+forks.csv drayton.csv
+wahpeton.csv forks.csv
+wahpeton.csv drayton.csv
+fargo.csv drayton.csv

@@ -24,6 +24,7 @@ import heapq
 
 import dtw
 from .empirical import EmpiricalFormulas
+from .dataloader import RcsvLoader
 
 class TestClass(object):
 
@@ -68,8 +69,8 @@ class RiverPair:
         self.glevels = dict()
         self.w = 30  # windows size
         self.save_with_header = True
-        self.w_years=22
-        self.test_size=2
+        self.w_years=20
+        self.test_size=1
    
     @staticmethod
     def run_all_pairs(r):
@@ -93,6 +94,7 @@ class RiverPair:
             ppoly = PdfPages('graphs/matches_poly_'+pair_name+'.pdf')
             pddtw = PdfPages('graphs/matches_ddtw_'+pair_name+'.pdf')
             pdtw  = PdfPages('graphs/matches_dtw_'+pair_name+'.pdf')
+            
             for (train,test) in train_test:
                 print train,test
                 for first_index in sorted(r.hstart_date[pair_name].keys()):
@@ -702,31 +704,45 @@ class RiverDataset:
 
 
 
-    def save_complete_years(self,complete_dir):
+    def save_complete_years(self,complete_dir,start_date = '07-01'):
         if self.pairs == None:
             raise Exception('sorry, you must execute load_pairs first')
         else:
             if not os.path.isdir(complete_dir):
                 os.mkdir(complete_dir)
-            tcount = 0       
+            tcount = 0
+            v = start_date.split('-')
+            split_month = v[0]     
+            split_day   = v[1] 
             for pair in self.pairs:
                 r1 = self.river_stations[pair[0]]
                 r2 = self.river_stations[pair[1]]
                 common_dates = r1.find_common_intervals(r2)
                 for (diff,start1,end1) in common_dates:
-                    if diff >= 364:
-                        tcount+=1
-                        
-                        dstart = r1.vdates[start1] 
-                        dend   = r1.vdates[end1]
+                        split_points = []
+                        for i in range(start1,end1):
+                            date = r1.vdates[i]
+                            v    = date.split('-')
+                            month = v[1]
+                            day   = v[2]
+                            if (day == split_day and month == split_month):
+                                split_points.append(i)
+                        for i in range(len(split_points) -1):
+                            start1 = split_points[i]
+                            end1   = split_points[i+1]   
+                            tcount+=1
+                            
+                            dstart = r1.vdates[start1] 
+                            dend   = r1.vdates[end1]
 
-                        start2 = r2.hdates[dstart]
-                        end2   = r2.hdates[dend]
+                            start2 = r2.hdates[dstart]
+                            end2   = r2.hdates[dend]
 
-                        v1     = r1.levels[start1:end1]
-                        v2     = r2.levels[start2:end2]
-                        data_name = r1.river_name.replace('.csv','_')+r2.river_name.replace('.csv','') + '_'+dstart+'.csv'
-                        self._save_vectors(v1,v2,complete_dir+os.sep+data_name)
+                            v1     = r1.levels[start1:end1]
+                            v2     = r2.levels[start2:end2]
+                            if (v1.count(-1) == 0 and v2.count(-1) == 0):
+                                data_name = r1.river_name.replace('.csv','_')+r2.river_name.replace('.csv','') + '_'+dstart+'.csv'
+                                self._save_vectors(v1,v2,complete_dir+os.sep+data_name)
             print tcount
 
 
@@ -1324,50 +1340,15 @@ class RiverStation:
         self.vdates = None
         self.hdates = None
         self.cmonth = {'ago': 8, 'dez': 12, 'mar': 3, 'fev': 2, 'jun': 6, 'jul': 7, 'jan': 1, 'abr': 4, 'set': 9, 'mai': 5, 'nov': 11, 'out': 10}
+        self.loader = RcsvLoader() 
 
     def load_data(self,dataset_file):
-        self.river_name = dataset_file.split(os.sep)[-1]
-        f = csv.reader(open(dataset_file),delimiter=',')
-        tmatrix = []
-        for row in f:
-            tmatrix.append(row)
-        matrix = np.matrix(tmatrix)
-        years = matrix[0].tolist()[0][1:]
-        days = matrix[1:,0].transpose().tolist()[0]
-        i = 0
-        self.vdates = []
-        self.hdates = dict()
-        for year in years:
-            for date in days:
-                v = date.split('-')
-                if len(v) == 2:
-                    day = v[0]
-                    month = self.cmonth[v[1]]
-                    sdate = '%s-%02d-%02d'%(year,month,int(day))
-                    self.vdates.append(sdate)
-                    self.hdates[sdate] = i
-                    i+=1
-        data = matrix[1:,1:]
-        (lines,cols) = data.shape
-        tvector = data.transpose().reshape(lines*cols).tolist()[0]
-        self.levels = []
-        for i in range(len(tvector)):
-            if i < len(self.vdates):
-                v = tvector[i]
-                sdate = self.vdates[i]
-                vd = sdate.split('-')
-                try:
-                    tint = int(v)
-                except ValueError:
-                    sdate = self.vdates[i]
-                    if vd[1] == '02' and vd[2] == '29':
-                        tint = self.levels[-1]
-                    else:
-                        tint = None
-                if vd[1] == '06' and vd[2] == '01':
-                    tint = None
-                self.levels.append(tint)
-
+        self.loader.load(dataset_file)
+        self.river_name = self.loader.river_name
+        self.vdates = self.loader.vdates
+        self.hdates = self.loader.hdates
+        self.levels = self.loader.levels
+        
 
     def find_common_intervals_old(self,river):
         
