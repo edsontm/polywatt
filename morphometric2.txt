@@ -7,3 +7,7 @@ wahpeton     ,0.295      , 0
 fargo        ,0.266      , 67.65
 forks        ,0.240      , 119.94
 drayton      ,0.234      , 72.29
+otowi        ,1.682      , 0
+sanfelipe    ,1.573      , 54.78
+escondida    ,1.410      , 152.45   
+sanmarcial  ,1.366      , 49.03

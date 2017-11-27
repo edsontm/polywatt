@@ -2,6 +2,7 @@ import os
 import csv
 import sys
 import string
+import re
 
 
 from sklearn.covariance import EllipticEnvelope
@@ -67,6 +68,7 @@ class RiverPair:
         self.verbose = True
         self.run_all = True
         self.glevels = dict()
+        self.poly = None
         self.w = 30  # windows size
         self.save_with_header = True
         self.w_years=20
@@ -194,13 +196,14 @@ class RiverPair:
                 p.set_interval(tinterval)
                 first_index = iv[i]
                 first_date = r.hstart_date[pair_name][first_index]
-                p.save_poly_plot(ppoly,first_date)
-                if p.path == None:
-                    p.ddtw()
-                    p.pip()
-                    p.find_correspondent_points()
-                p.save_ddtw_plot(pddtw,first_date)
-                p.save_dtw_plot(pdtw,first_date)
+                if type(p.poly) != type(None):
+                    p.save_poly_plot(ppoly,first_date)
+                    if p.path == None:
+                        p.ddtw()
+                        p.pip()
+                        p.find_correspondent_points()
+                    p.save_ddtw_plot(pddtw,first_date)
+                    p.save_dtw_plot(pdtw,first_date)
                 #p.save_twoway_plot()
 
 
@@ -320,7 +323,7 @@ class RiverPair:
     def pip(self):
         if self.run_all:
             ssize = len(self.lr1)
-            topn = int((ssize/364.0)*50)
+            topn = int((ssize/364.0)*20)
             self.topn1max = PairAnalysis.pipe(self.lr1,topn)
             self.topn2max = PairAnalysis.pipe(self.lr2,topn)
 
@@ -551,6 +554,7 @@ class RiverPair:
         lines = []
         vdiff = []
         points = []
+         
         for i in range(len(self.lr1)):
             diff = int (self.poly(self.lr1_raw[i]))
 
@@ -745,9 +749,15 @@ class RiverDataset:
                                 self._save_vectors(v1,v2,complete_dir+os.sep+data_name)
             print tcount
 
+    def skip_comments(self,lines):
+        comment_pattern = re.compile(r'\s*#.*$')
+        for line in lines:
+            line = re.sub(comment_pattern, '', line).strip()
+            if line:
+                yield line
 
     def load_pairs(self,pairs_file):
-        f = csv.reader(open(pairs_file),delimiter=' ',quotechar='|')
+        f = csv.reader(self.skip_comments(open(pairs_file)),delimiter=' ',quotechar='|')
         rname = []
         for row in f:
             if len(row) > 0:
