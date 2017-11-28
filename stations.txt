@@ -4,9 +4,12 @@
 #wahpeton.csv forks.csv
 #wahpeton.csv drayton.csv
 #fargo.csv drayton.csv
-otowi.csv sanfelipe.csv
-sanfelipe.csv escondida.csv
-escondida.csv sanmarcial.csv
+#otowi.csv sanfelipe.csv
+#sanfelipe.csv escondida.csv
+#escondida.csv sanmarcial.csv
 #otowi.csv escondida.csv
 #otowi.csv sanmarcial.csv
 #sanfelipe.csv sanmarcial.csv
+#
+monticello.csv bogalusa.csv
+stlouis.csv capegirardeau.csv

@@ -7,7 +7,8 @@ wahpeton     ,0.295      , 0
 fargo        ,0.266      , 67.65
 forks        ,0.240      , 119.94
 drayton      ,0.234      , 72.29
-otowi        ,1.682      , 0
-sanfelipe    ,1.573      , 54.78
-escondida    ,1.410      , 152.45   
-sanmarcial  ,1.366      , 49.03
+monticello    , 0.005318  , 0
+bogalusa      , 0.002225  , 110.43
+stlouis       ,0.125      ,0
+chester       ,0.112      ,112.5
+capegirardeau ,0.104      ,91.2

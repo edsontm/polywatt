@@ -721,33 +721,35 @@ class RiverDataset:
             for pair in self.pairs:
                 r1 = self.river_stations[pair[0]]
                 r2 = self.river_stations[pair[1]]
-                common_dates = r1.find_common_intervals(r2)
-                for (diff,start1,end1) in common_dates:
-                        split_points = []
-                        for i in range(start1,end1):
-                            date = r1.vdates[i]
-                            v    = date.split('-')
-                            month = v[1]
-                            day   = v[2]
-                            if (day == split_day and month == split_month):
-                                split_points.append(i)
-                        for i in range(len(split_points) -1):
-                            start1 = split_points[i]
-                            end1   = split_points[i+1]   
-                            tcount+=1
-                            
-                            dstart = r1.vdates[start1] 
-                            dend   = r1.vdates[end1]
-
-                            start2 = r2.hdates[dstart]
-                            end2   = r2.hdates[dend]
-
-                            v1     = r1.levels[start1:end1]
-                            v2     = r2.levels[start2:end2]
-                            if (v1.count(-1) == 0 and v2.count(-1) == 0):
-                                data_name = r1.river_name.replace('.csv','_')+r2.river_name.replace('.csv','') + '_'+dstart+'.csv'
-                                self._save_vectors(v1,v2,complete_dir+os.sep+data_name)
+                common_dates = r1.find_common_days_set(r2)
+                v1 = []
+                v2 = []
+                dstart = common_dates[0]
+                for i in range(len(common_dates)-1):
+                    date = common_dates[i]
+                    ndate = common_dates[i+1] # next day. Treat the case where split_day is not in the common_dates
+                    v    = date.split('-')
+                    month = v[1]
+                    day   = v[2]
+                    v    = ndate.split('-')
+                    nmonth = v[1]
+                    nday   = v[2]
+                    if nday == 1:
+                        nday = 32
+                    print split_day, split_month, day, nday, month, nmonth
+                    if (split_day >= day and split_day < nday):
+                         data_name = r1.river_name.replace('.csv','_')+r2.river_name.replace('.csv','') + '_'+dstart+'.csv'
+                         self._save_vectors(v1,v2,complete_dir+os.sep+data_name)
+                         v1 = []
+                         v2 = []
+                         dstart = date
+                    else:
+                        v1.append(r1.levels[r1.hdates[date]])
+                        v2.append(r2.levels[r2.hdates[date]])
+                         
             print tcount
+
+
 
     def skip_comments(self,lines):
         comment_pattern = re.compile(r'\s*#.*$')
@@ -1399,11 +1401,24 @@ class RiverStation:
         return ret            
         
         
-       
+    def find_common_days_set(self,river):
+        all_dates = dict();
+        for date in self.hdates:
+            all_dates[date] = 1
+
+        for date in river.hdates:
+            if date in all_dates:
+                all_dates[date] += 1
+        common_set = []
+        for date in sorted(all_dates.keys()):
+            if all_dates[date] == 2: # measurement present in both rivers
+                common_set.append(date)
+        return common_set
 
 
 
 
+        
     def find_common_intervals(self,river):
         
         start_date = self.vdates[0]

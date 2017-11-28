@@ -1,6 +1,15 @@
 import os
 import csv
 import numpy as np
+import re
+
+def skip_comments(lines):
+    comment_pattern = re.compile(r'\s*#.*$')
+    for line in lines:
+        line = re.sub(comment_pattern, '', line).strip()
+        if line:
+            yield line
+
 
 class TablesLoader:
     def __init__(self,variant='portuguese'):
@@ -11,7 +20,7 @@ class TablesLoader:
 
     def load(self,dataset_file):
         self.river_name = dataset_file.split(os.sep)[-1]
-        f = csv.reader(open(dataset_file),delimiter=',')
+        f = csv.reader(skip_comments(open(dataset_file)),delimiter=',')
         tmatrix = []
         for row in f:
             tmatrix.append(row)
@@ -95,5 +104,39 @@ class RcsvLoader:
         f.close()
 
             
+class UsgsWeb:
+    def __init__(self,):
+        self.river_name = None
+        self.vdates = None 
+        self.hdates = None
+        self.levels = None
+        self.output_dir = None
+
+    def copy(self,obj):
+        self.output_dir = obj.output_dir
+        self.river_name = obj.river_name
+        self.vdates = obj.vdates
+        self.hdates = obj.hdates
+        self.levels = obj.levels
+
+    def load(self,file_name):
+        self.river_name = file_name.split(os.sep)[-1]
+        f = csv.reader(skip_comments(open(file_name)),delimiter='\t')
+        i = 0
+        valid_line = 0
+        self.vdates = []
+        self.hdates = dict()
+        self.levels = []
+        for v in f:
+            if valid_line > 2 and len(v) > 4:  # ignore  first two lines (header)
+                date = v[2]
+                value = v[3]
+                status = v[4]
+                if status == 'A':
+                    self.vdates.append(date)
+                    self.levels.append(float(value))
+                    self.hdates[date] = i
+                    i += 1
+            valid_line += 1
 
 
