@@ -331,7 +331,7 @@ class RiverPair:
             self.topn1max = PairAnalysis.pipe(self.lr1,topn)
             self.topn2max = PairAnalysis.pipe(self.lr2,topn)
 
-    def find_correspondent_points(self):
+    def find_correspondent_points(self,enable_pip=False):
         if self.run_all:
             sr1 = self.path[0]
             sr2 = self.path[1]
@@ -344,12 +344,13 @@ class RiverPair:
 
                 dx = sr2[i]
                 dy = self.lr2[dx]
-
-                if ox in self.topn1max and dx in self.topn2max and diff >= 0:
-                    r1_raw_level = self.lr1_raw[sr1[i]]
-                    if r1_raw_level not in self.llevels:
-                        self.llevels[r1_raw_level] = []
-                    self.llevels[r1_raw_level].append(diff)
+                if diff >=0:
+                    pip_condition = (ox in self.topn1max and dx in self.topn2max) 
+                    if (enable_pip and pip_condition) or (not enable_pip):
+                        r1_raw_level = self.lr1_raw[sr1[i]]
+                        if r1_raw_level not in self.llevels:
+                            self.llevels[r1_raw_level] = []
+                        self.llevels[r1_raw_level].append(diff)
 
     
     def seyam2014(self):

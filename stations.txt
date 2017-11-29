@@ -1,3 +1,11 @@
+caceres.csv descalvados.csv
+descalvados.csv pconceicao.csv
+pconceicao.csv bvnorte.csv
+caceres.csv pconceicao.csv
+caceres.csv bvnorte.csv
+descalvados.csv bvnorte.csv
+monticello.csv bogalusa.csv
+stlouis.csv capegirardeau.csv
 #wahpeton.csv fargo.csv
 #fargo.csv forks.csv
 #forks.csv drayton.csv
@@ -11,5 +19,3 @@
 #otowi.csv sanmarcial.csv
 #sanfelipe.csv sanmarcial.csv
 #
-monticello.csv bogalusa.csv
-stlouis.csv capegirardeau.csv
