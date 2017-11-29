@@ -197,13 +197,17 @@ class RiverPair:
                 first_index = iv[i]
                 first_date = r.hstart_date[pair_name][first_index]
                 if type(p.poly) != type(None):
-                    p.save_poly_plot(ppoly,first_date)
-                    if p.path == None:
-                        p.ddtw()
-                        p.pip()
-                        p.find_correspondent_points()
-                    p.save_ddtw_plot(pddtw,first_date)
-                    p.save_dtw_plot(pdtw,first_date)
+                    try:
+                        p.save_poly_plot(ppoly,first_date)
+                        if p.path == None:
+                            p.ddtw()
+                            p.pip()
+                            p.find_correspondent_points()
+                        p.save_ddtw_plot(pddtw,first_date)
+                        p.save_dtw_plot(pdtw,first_date)
+                    except (RuntimeError, TypeError, NameError,ValueError):
+                        print "Sorry, can't generate the graphs"
+                        pass
                 #p.save_twoway_plot()
 
 
@@ -412,7 +416,11 @@ class RiverPair:
         plt.xlabel('River level (cm)')
         plt.ylabel('WaTT (days)')
         plt.plot(tx,self.poly(tx))
-        plt.savefig(pp,format='pdf')
+        try:
+            plt.savefig(pp,format='pdf')
+        except ValueError: 
+            print "Sorry, I cannot save the figures"
+            pass
         plt.clf()
 
 
