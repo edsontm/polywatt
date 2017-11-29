@@ -1,9 +1,9 @@
-#caceres.csv descalvados.csv 07-01
-#descalvados.csv pconceicao.csv 07-01
-#pconceicao.csv bvnorte.csv 07-01
-#caceres.csv pconceicao.csv 07-01
-#caceres.csv bvnorte.csv 07-01
-#descalvados.csv bvnorte.csv 07-01
+caceres.csv descalvados.csv 07-01
+descalvados.csv pconceicao.csv 07-01
+pconceicao.csv bvnorte.csv 07-01
+caceres.csv pconceicao.csv 07-01
+caceres.csv bvnorte.csv 07-01
+descalvados.csv bvnorte.csv 07-01
 monticello.csv bogalusa.csv 01-01
 stlouis.csv capegirardeau.csv 01-01
 #

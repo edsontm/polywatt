@@ -40,6 +40,7 @@ class Converter:
             print(file_name)
             self.load(self.input_dir+os.sep+file_name)
             self.interpolate_missing()
+            self.remove_missing()
             self.save()
 
     def save(self):
@@ -47,7 +48,24 @@ class Converter:
         rcsv.copy(self)
         rcsv.save()
         
-        
+    def remove_missing(self):
+        nlevels = []
+        nvdate  = []
+        nhdate  = dict()
+        counter = 0
+        for i in range(len(self.levels)):
+            value = self.levels[i]
+            date  = self.vdate[i]
+            if value == None:
+                nlevels.append(value)
+                nvdate.append(date)
+                nhdate[date] = counter
+                counter += 1
+        self.levels = nlevels
+        self.hdate  = nhdate
+        self.vdate  = nvdate
+            
+         
              
     def missing_dict(self,v):
         anterior = 0
