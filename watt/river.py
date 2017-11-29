@@ -717,19 +717,19 @@ class RiverDataset:
 
 
 
-    def save_complete_years(self,complete_dir,start_date = '01-01'):
+    def save_complete_years(self,complete_dir):
         if self.pairs == None:
             raise Exception('sorry, you must execute load_pairs first')
         else:
             if not os.path.isdir(complete_dir):
                 os.mkdir(complete_dir)
             tcount = 0
-            v = start_date.split('-')
-            split_month = v[0]     
-            split_day   = v[1] 
             for pair in self.pairs:
                 r1 = self.river_stations[pair[0]]
                 r2 = self.river_stations[pair[1]]
+                v = pair[2].split('-')
+                split_month = v[0]     
+                split_day   = v[1] 
                 common_dates = r1.find_common_days_set(r2)
                 v1 = []
                 v2 = []
@@ -745,9 +745,12 @@ class RiverDataset:
                     nday   = v[2]
                     if nday == 1:
                         nday = 32
-                    print split_day, split_month, day, nday, month, nmonth
-                    if (split_day >= day and split_day < nday):
+                    if nmonth == 1:
+                        nmonth = 13
+                    print split_day, day, nday, split_month, month, nmonth
+                    if (split_day >= day and split_day < nday) and (split_month == month):
                          data_name = r1.river_name.replace('.csv','_')+r2.river_name.replace('.csv','') + '_'+dstart+'.csv'
+                         print data_name
                          self._save_vectors(v1,v2,complete_dir+os.sep+data_name)
                          v1 = []
                          v2 = []
