@@ -1,24 +1,8 @@
-caceres.csv descalvados.csv 07-01
-descalvados.csv pconceicao.csv 07-01
-pconceicao.csv bvnorte.csv 07-01
-caceres.csv pconceicao.csv 07-01
-caceres.csv bvnorte.csv 07-01
-descalvados.csv bvnorte.csv 07-01
+#caceres.csv descalvados.csv 07-01
+#descalvados.csv pconceicao.csv 07-01
+#pconceicao.csv bvnorte.csv 07-01
+#caceres.csv pconceicao.csv 07-01
+#caceres.csv bvnorte.csv 07-01
+#descalvados.csv bvnorte.csv 07-01
 monticello.csv bogalusa.csv 01-01
-stlouis.csv capegirardeau.csv 01-01
-#
-#
-#
-#wahpeton.csv fargo.csv
-#fargo.csv forks.csv
-#forks.csv drayton.csv
-#wahpeton.csv forks.csv
-#wahpeton.csv drayton.csv
-#fargo.csv drayton.csv
-#otowi.csv sanfelipe.csv
-#sanfelipe.csv escondida.csv
-#escondida.csv sanmarcial.csv
-#otowi.csv escondida.csv
-#otowi.csv sanmarcial.csv
-#sanfelipe.csv sanmarcial.csv
-#
+prescott.csv winona.csv 01-01

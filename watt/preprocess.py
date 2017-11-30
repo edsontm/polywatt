@@ -55,15 +55,15 @@ class Converter:
         counter = 0
         for i in range(len(self.levels)):
             value = self.levels[i]
-            date  = self.vdate[i]
-            if value == None:
+            date  = self.vdates[i]
+            if type(value) != type(None):
                 nlevels.append(value)
                 nvdate.append(date)
                 nhdate[date] = counter
                 counter += 1
         self.levels = nlevels
-        self.hdate  = nhdate
-        self.vdate  = nvdate
+        self.hdates  = nhdate
+        self.vdates  = nvdate
             
          
              

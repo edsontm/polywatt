@@ -331,7 +331,7 @@ class RiverPair:
             self.topn1max = PairAnalysis.pipe(self.lr1,topn)
             self.topn2max = PairAnalysis.pipe(self.lr2,topn)
 
-    def find_correspondent_points(self,enable_pip=False):
+    def find_correspondent_points(self,enable_pip=True):
         if self.run_all:
             sr1 = self.path[0]
             sr2 = self.path[1]
@@ -725,6 +725,7 @@ class RiverDataset:
                 os.mkdir(complete_dir)
             tcount = 0
             for pair in self.pairs:
+                print pair
                 r1 = self.river_stations[pair[0]]
                 r2 = self.river_stations[pair[1]]
                 v = pair[2].split('-')
@@ -747,11 +748,11 @@ class RiverDataset:
                         nday = 32
                     if nmonth == 1:
                         nmonth = 13
-                    print split_day, day, nday, split_month, month, nmonth
                     if (split_day >= day and split_day < nday) and (split_month == month):
                          data_name = r1.river_name.replace('.csv','_')+r2.river_name.replace('.csv','') + '_'+dstart+'.csv'
                          print data_name
-                         self._save_vectors(v1,v2,complete_dir+os.sep+data_name)
+                         if len(common_dates) > 363:
+                            self._save_vectors(v1,v2,complete_dir+os.sep+data_name)
                          v1 = []
                          v2 = []
                          dstart = date

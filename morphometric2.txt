@@ -3,12 +3,7 @@ caceres      ,0.11751   , 0
 descalvados  ,0.10511   , 129.717
 pconceicao   ,0.09683    , 123.255
 bvnorte      ,0.09651    , 138.995
-wahpeton     ,0.295      , 0
-fargo        ,0.266      , 67.65
-forks        ,0.240      , 119.94
-drayton      ,0.234      , 72.29
 monticello    , 0.005318  , 0
 bogalusa      , 0.002225  , 110.43
-stlouis       ,0.125      ,0
-chester       ,0.112      ,112.5
-capegirardeau ,0.104      ,91.2
+prescott      ,0.199      ,0
+winona        ,0.189      ,125.5
