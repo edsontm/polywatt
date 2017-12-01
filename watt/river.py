@@ -751,7 +751,7 @@ class RiverDataset:
                     if (split_day >= day and split_day < nday) and (split_month == month):
                          data_name = r1.river_name.replace('.csv','_')+r2.river_name.replace('.csv','') + '_'+dstart+'.csv'
                          print data_name
-                         if len(common_dates) > 363:
+                         if len(v1) > 363:
                             self._save_vectors(v1,v2,complete_dir+os.sep+data_name)
                          v1 = []
                          v2 = []
