@@ -75,7 +75,7 @@ class RiverPair:
         self.test_size=1
    
     @staticmethod
-    def run_all_pairs(r):
+    def run_all_pairs(r,enable_pip=True):
         out_dir = 'prepared_data'
         out_plot = 'graphs'
         if not os.path.isdir(out_dir):
@@ -112,7 +112,7 @@ class RiverPair:
 
                     p.ddtw()
                     p.pip()
-                    p.find_correspondent_points()
+                    p.find_correspondent_points(enable_pip)
                     seyamList.append(p.seyam2014())
 
                     print 'llevels',p.llevels
