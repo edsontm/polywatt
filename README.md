@@ -20,10 +20,16 @@ git clone https://github.com/edsontm/polywatt
 cd polywatt
 ./preprocess.py tables
 ./preprocess.py usgs
+./preprocess.py usgsweb
 ./joinrivers.py
 ./estimate_watt.py
 ./evaluate.py
 
+```
+
+To disable pip run the `estimate_watt.py` using the following command:
+```
+./estimate_watt.py --disable-pip
 ```
 
 
