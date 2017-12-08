@@ -59,11 +59,13 @@ class RiverPairCache:
         self.topn2max = None
 
 class RiverPair:
-    def __init__(self,data,pair_name):
-        tarray = np.matrix(data)
+    def __init__(self,data=None,pair_name):
+        if data != None:
+            tarray = np.matrix(data)
+            self.gr1_raw = np.array(tarray[:,0].transpose().tolist()[0])
+            self.gr2_raw = np.array(tarray[:,1].transpose().tolist()[0])
+        
         self.pair_name = pair_name
-        self.gr1_raw = np.array(tarray[:,0].transpose().tolist()[0])
-        self.gr2_raw = np.array(tarray[:,1].transpose().tolist()[0])
         self.vcache = dict()
         self.verbose = True
         self.run_all = True
@@ -73,7 +75,10 @@ class RiverPair:
         self.save_with_header = True
         self.w_years=20
         self.test_size=1
-   
+    def set_raw_data(self,up,down):
+        self.gr1_raw = np.array(up)
+        self.gr2_raw = np.array(down)
+     
     @staticmethod
     def run_all_pairs(r,enable_pip=True):
         out_dir = 'prepared_data'
